@@ -2,16 +2,88 @@
 <html>
     <title>Circles</title>
     <script type="text/javascript" src="paper-full.js"></script>
+    <script type="text/javascript" src="howler.min.js"></script>
     <link rel="stylesheet" type="text/css" href="circles.css">
     <script type="text/paperscript" canvas="myCanvas">
 
+        var keyboardValues = {
+            "q": {sound: "sounds/bubbles.mp3", color: "orange"},
+            "w": {sound: "sounds/clay.mp3", color: "blue"},
+            "e": {sound: "sounds/confetti.mp3", color: "pink"},
+            "r": {sound: "sounds/corona.mp3", color: "purple"},
+            "t": {sound: "sounds/dotted-spiral.mp3", color: "red"},
+            "y": {sound: "sounds/flash-1.mp3", color: "green"},
+            "u": {sound: "sounds/flash-2.mp3", color: "brown"},
+            "i": {sound: "sounds/flash- 3.mp3", color: "yellow"},
+            "o": {sound: "sounds/glimmer.mp3", color: "grey"},
+            "p": {sound: "sounds/moon.mp3", color: "orange"},
+            "a": {sound: "sounds/pinwheel.mp3", color: "blue"},
+            "s": {sound: "sounds/piston-1.mp3", color: "pink"},
+            "d": {sound: "sounds/piston-2.mp3", color: "purple"},
+            "f": {sound: "sounds/piston-3.mp3", color: "red"},
+            "g": {sound: "sounds/prism-1.mp3", color: "green"},
+            "h": {sound: "sounds/prism-2.mp3", color: "brown"},
+            "j": {sound: "sounds/prism-3.mp3", color: "yellow"},
+            "k": {sound: "sounds/splits.mp3", color: "orange"},
+            "l": {sound: "sounds/squiggle.mp3", color: "blue"},
+            "z": {sound: "sounds/strike.mp3", color: "pink"},
+            "x": {sound: "sounds/suspension.mp3", color: "purple"},
+            "c": {sound: "sounds/timer.mp3", color: "red"},
+            "v": {sound: "sounds/ufo.mp3", color: "green"},
+            "b": {sound: "sounds/veil.mp3", color: "brown"},
+            "n": {sound: "sounds/wipe.mp3", color: "yellow"},
+            "m": {sound: "sounds/zig-zag.mp3", color: "grey"},
+            "1": {sound: "sounds/bubbles.mp3", color: "blue"},
+            "2": {sound: "sounds/clay.mp3", color: "purple"},
+            "3": {sound: "sounds/confetti.mp3", color: "pink"},
+            "4": {sound: "sounds/corona.mp3", color: "red"},
+            "5": {sound: "sounds/dotted-spiral.mp3", color: "green"},
+            "6": {sound: "sounds/flash-1.mp3", color: "brown"},
+            "7": {sound: "sounds/glimmer.mp3", color: "yellow"},
+            "8": {sound: "sounds/flash-2.mp3", color: "grey"},
+            "9": {sound: "sounds/moon.mp3", color: "blue"},
+            "0": {sound: "sounds/flash-3.mp3", color: "orange"},
+            "-": {sound: "sounds/pinwheel.mp3", color: "brown"},
+            "=": {sound: "sounds/piston-1.mp3", color: "yellow"},
+            "[": {sound: "sounds/prism-1.mp3", color: "red"},
+            "]": {sound: "sounds/piston-2.mp3", color: "green"},
+            ";": {sound: "sounds/prism-2.mp3", color: "brown"},
+            "'": {sound: "sounds/piston-3.mp3", color: "green"},
+            ",": {sound: "sounds/prism-3.mp3", color: "pink"},
+            ".": {sound: "sounds/splits.mp3", color: "purple"},
+            "/": {sound: "sounds/squiggle.mp3", color: "orange"},
+            "§": {sound: "sounds/strike.mp3", color: "blue"},
+            "backspace": {sound: "sounds/suspension.mp3", color: "green"},
+            "enter": {sound: "sounds/ufo.mp3", color: "gray"},
+            "shift": {sound: "sounds/veil.mp3", color: "purple"}
+        }
+
+        var circles = [];
+
         function onKeyUp(event) {
-            // When a key is released, set the content of the text item:
+            // When a key is pressed, set the content of the text item:
+            var soundAndColor = keyboardValues[event.key] || ["sounds/veil.mp3", "purple"];
+
             var width = view.size.width;
             var height = view.size.height;
             var widthRandomize = width * Math.random();
             var heightRandomize = height * Math.random();
-            new Path.Circle(new Point(widthRandomize, heightRandomize), 100).fillColor = 'pink';
+            var newCircle = new Path.Circle(new Point(widthRandomize, heightRandomize), 450);
+
+            circles.push(newCircle);
+
+            var sound = new Howl({
+              src: [soundAndColor.sound]
+            }).play();
+
+            newCircle.fillColor = soundAndColor.color;
+        }
+
+        function onFrame(event) {
+            for (var i = 0; i < circles.length; i++) {
+                circles[i].fillColor.hue += 1;
+                circles[i].scale(0.95);
+            }
         }
     </script>
 </head>
