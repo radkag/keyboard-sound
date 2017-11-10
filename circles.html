@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <title>Circles</title>
+    <script type="text/javascript" src="paper-full.js"></script>
+    <link rel="stylesheet" type="text/css" href="circles.css">
+    <script type="text/paperscript" canvas="myCanvas">
+
+        function onKeyUp(event) {
+            // When a key is released, set the content of the text item:
+            var width = view.size.width;
+            var height = view.size.height;
+            var widthRandomize = width * Math.random();
+            var heightRandomize = height * Math.random();
+            new Path.Circle(new Point(widthRandomize, heightRandomize), 100).fillColor = 'pink';
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
